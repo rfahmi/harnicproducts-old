@@ -56,13 +56,13 @@ try {
         throw new Exception("Prepare failed: " . mysqli_error($link));
     }
     
-    // Update mstproduk with the new image
+    // Update mstproduk2 with the new image
     $updateField = "gambar" . $imagePosition;
-    $updateQuery = "UPDATE mstproduk SET $updateField = ? WHERE produk = ?";
+    $updateQuery = "UPDATE mstproduk2 SET $updateField = ? WHERE produk = ?";
     $updateStmt = mysqli_prepare($link, $updateQuery);
     
     if (!$updateStmt) {
-        throw new Exception("Prepare failed for mstproduk update: " . mysqli_error($link));
+        throw new Exception("Prepare failed for mstproduk2 update: " . mysqli_error($link));
     }
     
     mysqli_stmt_bind_param($updateStmt, "si", $nama_baru1, $produk);

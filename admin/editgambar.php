@@ -5,7 +5,7 @@
 	$kodegambar=$_GET['kodegambar'];
 	$nama_file1='';
 
-	$query="select a.*,b.namaproduk from imgproduk a left join mstproduk b on a.produk=b.produk where a.produk='$produk' and a.kodegambar='$kodegambar'";
+	$query="select a.*,b.namaproduk from imgproduk a left join mstproduk2 b on a.produk=b.produk where a.produk='$produk' and a.kodegambar='$kodegambar'";
 	$sql= mysqli_query($link,$query) or die(mysql_error());
 	$data=mysqli_fetch_array($sql);
 	if ($sql) {

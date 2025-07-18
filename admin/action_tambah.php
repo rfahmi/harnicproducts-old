@@ -13,7 +13,7 @@ if ($namaproduk=='' or $kodeproduk=='') {
 	exit();	
 }
 
-$query="insert into mstproduk (kodeproduk,namaproduk,deskripsi,harga,kategori) values('$kodeproduk','$namaproduk','$deskripsi','$harga','$kategori')";
+$query="insert into mstproduk2 (kodeproduk,namaproduk,deskripsi,harga,kategori) values('$kodeproduk','$namaproduk','$deskripsi','$harga','$kategori')";
 $sql= mysqli_query($link,$query) or die(mysql_error());
 if ($sql) {
 	echo "<meta http-equiv='refresh' content='0;url=index.php?hal=listproduk'>";

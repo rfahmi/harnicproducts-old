@@ -4,7 +4,7 @@ include 'config.php';
 
 $kategori_id=$_GET['kategori_id'];
 $nama_file='';
-$query="select a.*,ifnull((select count(1) from mstproduk where kategori=a.kategori_id),0)terpakai from mstkategori a where kategori_id='$kategori_id'";
+$query="select a.*,ifnull((select count(1) from mstproduk2 where kategori=a.kategori_id),0)terpakai from mstkategori a where kategori_id='$kategori_id'";
 $sql= mysqli_query($link,$query) or die(mysql_error());
 $data=mysqli_fetch_array($sql);
 if ($sql) {

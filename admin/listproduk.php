@@ -43,7 +43,7 @@
 
 				$mulai_dari=$limit * ($page-1);
 
-					$query ="select a.*,b.kategori_nama,b.kategori_parent,ifnull((select gambar from imgproduk where produk=a.produk order by kodegambar limit 1),'XX')gambar from mstproduk a left join mstkategori b on a.kategori=b.kategori_id order by namaproduk limit $mulai_dari,$limit";
+					$query ="select a.*,b.kategori_nama,b.kategori_parent,ifnull((select gambar from imgproduk where produk=a.produk order by kodegambar limit 1),'XX')gambar from mstproduk2 a left join mstkategori b on a.kategori=b.kategori_id order by namaproduk limit $mulai_dari,$limit";
 					$sql=mysqli_query($link,$query);
 					$no=($page * $limit)-4;
 					while ($data=mysqli_fetch_array($sql)):

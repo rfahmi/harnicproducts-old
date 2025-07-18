@@ -4,7 +4,7 @@
 	$produk=$_GET['produk'];
 	$namakategori='';
 
-	$query="select a.*,b.kategori_nama,b.kategori_parent from mstproduk a left join mstkategori b on a.kategori=b.kategori_id where produk='$produk'";
+	$query="select a.*,b.kategori_nama,b.kategori_parent from mstproduk2 a left join mstkategori b on a.kategori=b.kategori_id where produk='$produk'";
 	$sql= mysqli_query($link,$query) or die(mysql_error());
 	$data=mysqli_fetch_array($sql);
 	if ($sql) {

@@ -76,7 +76,7 @@ try {
     }
     
     // Update mstproduk
-    $query = "UPDATE mstproduk SET 
+    $query = "UPDATE mstproduk2 SET 
               gambar1 = CASE WHEN gambar1 = ? THEN '' ELSE gambar1 END,
               gambar2 = CASE WHEN gambar2 = ? THEN '' ELSE gambar2 END,
               gambar3 = CASE WHEN gambar3 = ? THEN '' ELSE gambar3 END
@@ -92,7 +92,7 @@ try {
         throw new Exception("Failed to update mstproduk: " . mysqli_stmt_error($stmt));
     }
     
-    // Update mstproduk - shift remaining images up
+    // Update mstproduk2 - shift remaining images up
     if ($position > 0) {
         $updates = array();
         for ($i = $position; $i <= 2; $i++) {
@@ -100,7 +100,7 @@ try {
         }
         $updates[] = "gambar3 = ''";
         
-        $query = "UPDATE mstproduk SET " . implode(", ", $updates) . " WHERE produk = ?";
+        $query = "UPDATE mstproduk2 SET " . implode(", ", $updates) . " WHERE produk = ?";
         $stmt = mysqli_prepare($link, $query);
         mysqli_stmt_bind_param($stmt, "i", $produk);
         if (!mysqli_stmt_execute($stmt)) {
@@ -123,7 +123,7 @@ try {
     }
     
     // Normalize the remaining images (remove gaps)
-    $query = "UPDATE mstproduk 
+    $query = "UPDATE mstproduk2 
               SET gambar1 = CASE WHEN gambar1 = '' AND gambar2 != '' THEN gambar2 
                                 WHEN gambar1 = '' AND gambar3 != '' THEN gambar3 
                                 ELSE gambar1 END,

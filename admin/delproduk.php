@@ -17,7 +17,7 @@ while ($data=mysqli_fetch_array($sql)):
 		else {}
 endwhile;	
 
-$query="delete from mstproduk where produk='$produk'";
+$query="delete from mstproduk2 where produk='$produk'";
 $sql= mysqli_query($link,$query) or die(mysql_error());
 if ($sql) {
 	echo "<script type='text/javascript'>

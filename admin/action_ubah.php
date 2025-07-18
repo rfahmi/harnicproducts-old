@@ -13,7 +13,7 @@ if ($namaproduk=='' or $kodeproduk=='') {
 		exit();	
 }
 
-$query="Update mstproduk set kodeproduk='$kodeproduk',namaproduk='$namaproduk',deskripsi='$deskripsi',harga='$harga',kategori='$kategori' where produk='$produk'";
+$query="Update mstproduk2 set kodeproduk='$kodeproduk',namaproduk='$namaproduk',deskripsi='$deskripsi',harga='$harga',kategori='$kategori' where produk='$produk'";
 $sql= mysqli_query($link,$query) or die(mysql_error());
 if ($sql) {
 	echo "Edit berhasil <meta http-equiv='refresh' content='1;url=index.php?hal=listproduk'>";	

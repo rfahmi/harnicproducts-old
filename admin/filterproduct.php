@@ -35,7 +35,7 @@
 				<?php
    			    include '../config.php';
 				//pagination
-				$sqlcount ="select count(1) from mstproduk a inner join mstkategori b on a.kategori=b.kategori_id left join mstkategori c on b.kategori_parent=c.kategori_id left join mstkategori d on c.kategori_parent=d.kategori_id where d.kategori_parent='$_GET[kode_divisi]' or d.kategori_id='$_GET[kode_divisi]'";
+				$sqlcount ="select count(1) from mstproduk2 a inner join mstkategori b on a.kategori=b.kategori_id left join mstkategori c on b.kategori_parent=c.kategori_id left join mstkategori d on c.kategori_parent=d.kategori_id where d.kategori_parent='$_GET[kode_divisi]' or d.kategori_id='$_GET[kode_divisi]'";
 				$rscount=mysqli_fetch_array(mysqli_query($link,$sqlcount));
 				$banyakdata=$rscount[0];
 				$page=isset($_GET['page'])? $_GET['page']:1;
@@ -44,7 +44,7 @@
 				$mulai_dari=$limit * ($page-1);
 				//-----	 
 
-					$query ="select a.*,b.kategori_nama,b.kategori_parent,ifnull((select gambar from imgproduk where produk=a.produk order by kodegambar limit 1),'XX')gambar from mstproduk a inner join mstkategori b on a.kategori=b.kategori_id left join mstkategori c on b.kategori_parent=c.kategori_id left join mstkategori d on c.kategori_parent=d.kategori_id where d.kategori_parent='$_GET[kode_divisi]' or d.kategori_id='$_GET[kode_divisi]' order by namaproduk limit $mulai_dari,$limit";
+					$query ="select a.*,b.kategori_nama,b.kategori_parent,ifnull((select gambar from imgproduk where produk=a.produk order by kodegambar limit 1),'XX')gambar from mstproduk2 a inner join mstkategori b on a.kategori=b.kategori_id left join mstkategori c on b.kategori_parent=c.kategori_id left join mstkategori d on c.kategori_parent=d.kategori_id where d.kategori_parent='$_GET[kode_divisi]' or d.kategori_id='$_GET[kode_divisi]' order by namaproduk limit $mulai_dari,$limit";
 					$sql=mysqli_query($link,$query);
 					$no=($page * $limit)-4;
 					while ($data=mysqli_fetch_array($sql)):
