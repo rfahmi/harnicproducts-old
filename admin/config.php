@@ -1,7 +1,7 @@
 <?php
 echo "<base href='http://localhost:8000/admin/'>";
-require_once __DIR__ . '/includes/Database.php';
-require_once __DIR__ . '/includes/DatabaseHelper.php';
+require_once __DIR__ . '/../includes/Database.php';
+require_once __DIR__ . '/../includes/DatabaseHelper.php';
 
 try {
     $db = Database::getInstance();
