@@ -1,23 +1,24 @@
 <?php
 include 'config.php';
 
-// Sanitize input
-$produk = isset($_GET['produk']) ? mysqli_real_escape_string($link, $_GET['produk']) : '';
-$nama_file = '';
-$namaproduk = '';
+try {
+    // Sanitize input
+    $produk = isset($_GET['produk']) ? $db->escape($_GET['produk']) : '';
+    $nama_file = '';
+    $namaproduk = '';
 
-if (empty($produk)) {
-    echo "<div class='alert alert-danger'>Product ID is required</div>";
-    echo "<meta http-equiv='refresh' content='2;url=index.php'>";
-    exit;
-}
+    if (empty($produk)) {
+        echo "<div class='alert alert-danger'>Product ID is required</div>";
+        echo "<meta http-equiv='refresh' content='2;url=index.php'>";
+        exit;
+    }
 
-// Get product details
-$query = "SELECT * FROM mstproduk WHERE produk = ?";
-$stmt = mysqli_prepare($link, $query);
-mysqli_stmt_bind_param($stmt, "s", $produk);
-mysqli_stmt_execute($stmt);
-$result = mysqli_stmt_get_result($stmt);
+    // Get product details using prepared statement
+    $query = "SELECT * FROM mstproduk2 WHERE produk = ?";
+    $stmt = $db->prepare($query);
+    $stmt->bind_param("s", $produk);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
 if ($result && $data = mysqli_fetch_array($result)) {
     $namaproduk = $data['namaproduk'];
@@ -27,9 +28,18 @@ if ($result && $data = mysqli_fetch_array($result)) {
     exit;
 }
 ?>
-<thead>
-   <h3><?php echo htmlspecialchars($namaproduk); ?></h3>				
-</thead>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h3><?php echo htmlspecialchars($namaproduk); ?></h3>
+        <div>
+            <a href="index.php?hal=listproduk" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Product List
+            </a>
+            <a href="addgambar.php?produk=<?php echo htmlspecialchars($produk); ?>" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Add Image
+            </a>
+        </div>
+    </div>
 <tbody>
   <?php
     // Count total images for pagination
@@ -45,16 +55,12 @@ if ($result && $data = mysqli_fetch_array($result)) {
     $limit = 8;
     $mulai_dari = $limit * ($page - 1);
 
-    // Main query with proper JOIN handling
+    // Main query with basic information
     $query = "SELECT 
-                a.*,
-                LEFT(CONCAT(IFNULL(a.gambar,''), REPEAT('.', 25)), 25) as notes,
-                COALESCE(b.namavarian, 'N/A') as namavarian,
-                COALESCE(c.namaangel, 'N/A') as namaangel
-              FROM imgproduk a 
-              LEFT JOIN mstvarian b ON a.varian = b.varian 
-              LEFT JOIN mstangel c ON a.angel = c.angel 
-              WHERE a.produk = ? 
+                i.*,
+                LEFT(CONCAT(IFNULL(i.gambar,''), REPEAT('.', 25)), 25) as notes
+              FROM imgproduk i 
+              WHERE i.produk = ? 
               LIMIT ?, ?";
 
     if (!($stmt = mysqli_prepare($link, $query))) {
@@ -83,12 +89,7 @@ if ($result && $data = mysqli_fetch_array($result)) {
   ?>			
 
   <div class="col-md-3">  
-    <div style="background-color:#cc0000;color:white">
-       <text> <?php echo strtoupper($data['namavarian'])?> </text>
-    </div>
-  
-	<div class="panel panel-primary">
-	   <text  style="color:#660000"> <?php echo strtoupper($data['namaangel'])?> </text>
+    <div class="panel panel-primary">
 	    <div class="panel-body" >		
 		<?php 			
 			$gambar=$data['gambar'];

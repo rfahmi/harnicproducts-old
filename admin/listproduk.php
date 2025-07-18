@@ -32,11 +32,12 @@
 				</thead>
 				<tbody>
 					<?php
-					 include '../config.php';
+					include '../config.php';
 
-				$sqlcount ="select count(1) from mstproduk";
-				$rscount=mysqli_fetch_array(mysqli_query($link,$sqlcount));
-				$banyakdata=$rscount[0];
+				try {
+					$sqlcount = "SELECT COUNT(1) as total FROM mstproduk";
+					$rscount = $db->fetchRow($sqlcount);
+					$banyakdata = $rscount['total'];
 				$page=isset($_GET['page'])? $_GET['page']:1;
 				$limit=5;
 
